@@ -1,0 +1,51 @@
+name: ${project.artifactId}
+version: ${project.version}
+main: ${project.groupId}.${project.artifactId}
+api-version: '1.21'
+authors: [ CuzIm1Tigaaa ]
+description: Timers for plugins to use
+commands:
+  timer:
+    description: Timer command
+    usage: /timer <start|stop|pause|resume|reset|select> [timerName]
+permissions:
+  timer.command.start:
+    description: Gives access to the start command
+    default: false
+  timer.command.stop:
+    description: Gives access to the stop command
+    default: false
+  timer.command.pause:
+    description: Gives access to the pause command
+    default: false
+  timer.command.reset:
+    description: Gives access to the reset command
+    default: false
+  timer.command.create:
+    description: Gives access to the create command
+    default: false
+  timer.command.select:
+    description: Gives access to the select command
+    default: false
+  timer.command.delete:
+    description: Gives access to the delete command
+    default: false
+  timer.command.list:
+    description: Gives access to the list command
+    default: false
+  timer.command.direction:
+    description: Gives access to the direction command
+    default: false
+  timer.command.*:
+    description: Gives access to all timer commands
+    default: false
+    children:
+      timer.command.start: true
+      timer.command.stop: true
+      timer.command.pause: true
+      timer.command.reset: true
+      timer.command.create: true
+      timer.command.select: true
+      timer.command.delete: true
+      timer.command.list: true
+      timer.command.direction: true
