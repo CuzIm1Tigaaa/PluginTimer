@@ -73,13 +73,6 @@ public class TimerAPI {
 		if(timer == null)
 			return;
 
-		if(timer.getTimerBar() != null) {
-			BossBar bossBar = timer.getTimerBar();
-			bossBar.setProgress(0);
-			if(!shutdown)
-				Bukkit.getScheduler().runTaskLater(plugin, bossBar::removeAll, 20);
-		}
-
 		if(taskId != null)
 			Bukkit.getScheduler().cancelTask(taskId);
 		this.paused = false;
@@ -107,10 +100,24 @@ public class TimerAPI {
 		return timers.stream().filter(Timer::isActive).findFirst().orElse(null);
 	}
 
-	public Timer setActiveTimer(Timer timer) {
+	public void setActiveTimer(Timer timer) {
 		timers.forEach(t -> t.setActive(false));
 		timer.setActive(true);
-		return timer;
+	}
+
+	public void createTimer(String name, boolean bossbar) {
+		timers.add(new Timer(name, bossbar));
+	}
+
+	public void createTimer(String name, int seconds, boolean countUp, boolean active, boolean bossbar) {
+		timers.add(new Timer(name, seconds, countUp, active, bossbar));
+	}
+
+	public void deleteTimer(String name) {
+		Timer timer = getTimer(name);
+		if(timer == null)
+			return;
+		timers.remove(timer);
 	}
 
 	public void resetTimer() {

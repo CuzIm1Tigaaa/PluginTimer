@@ -99,7 +99,7 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 					Message.sendMessage(sender, "&cEin Timer mit diesem Namen existiert bereits!");
 					return true;
 				}
-				timerAPI.getTimers().add(new Timer(name, args.length > 2 && args[2].equalsIgnoreCase("bossbar")));
+				timerAPI.createTimer(name, args.length > 2 && args[2].equalsIgnoreCase("bossbar"));
 				Message.sendMessage(sender, "&7Der Timer &a%s &7wurde erstellt!", name);
 			}
 			case "select" -> {
@@ -135,7 +135,7 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 					Message.sendMessage(sender, "&cEin Timer mit diesem Namen existiert nicht!");
 					return true;
 				}
-				timerAPI.getTimers().remove(timerAPI.getTimer(name));
+				timerAPI.deleteTimer(name);
 				Message.sendMessage(sender, "&7Der Timer &a%s &7wurde gelöscht!", name);
 			}
 			case "list" -> {
