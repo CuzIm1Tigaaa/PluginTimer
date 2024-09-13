@@ -99,8 +99,8 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 					Message.sendMessage(sender, "&cEin Timer mit diesem Namen existiert bereits!");
 					return true;
 				}
-				timerAPI.createTimer(name, args.length > 2 && args[2].equalsIgnoreCase("bossbar"));
-				Message.sendMessage(sender, "&7Der Timer &a%s &7wurde erstellt!", name);
+				Timer timer = timerAPI.createTimer(name, args.length > 2 && args[2].equalsIgnoreCase("bossbar"));
+				Message.sendMessage(sender, "&7Der Timer &a%s &7wurde erstellt!", timer.getName());
 			}
 			case "select" -> {
 				if(noPermission(sender, TIMER_SELECT))

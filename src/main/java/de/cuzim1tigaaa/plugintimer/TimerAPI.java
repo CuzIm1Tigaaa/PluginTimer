@@ -105,12 +105,17 @@ public class TimerAPI {
 		timer.setActive(true);
 	}
 
-	public void createTimer(String name, boolean bossbar) {
-		timers.add(new Timer(name, bossbar));
+	public Timer createTimer(String name, boolean bossbar) {
+		Timer timer = new Timer(name, bossbar);
+		timers.add(timer);
+		return timer;
 	}
 
-	public void createTimer(String name, int seconds, boolean countUp, boolean active, boolean bossbar) {
-		timers.add(new Timer(name, seconds, countUp, active, bossbar));
+	public Timer createTimer(String name, int seconds, boolean countUp, boolean active, boolean bossbar) {
+		Timer timer = new Timer(name, seconds, countUp, active, bossbar);
+		timers.add(timer);
+		setActiveTimer(timer);
+		return timer;
 	}
 
 	public void deleteTimer(String name) {
