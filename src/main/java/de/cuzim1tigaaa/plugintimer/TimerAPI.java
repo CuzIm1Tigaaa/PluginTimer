@@ -56,7 +56,7 @@ public class TimerAPI {
 
 			if(!timer.isCountUp() && timer.getSeconds() <= 0) {
 				TimerStopEvent tse = new TimerStopEvent(timer, TimerStopEvent.StopReason.FINISHED);
-				stopTimer(false);
+				stopTimer();
 				Bukkit.getPluginManager().callEvent(tse);
 				return;
 			}
@@ -68,7 +68,7 @@ public class TimerAPI {
 		return true;
 	}
 
-	public void stopTimer(boolean shutdown) {
+	public void stopTimer() {
 		Timer timer = getActiveTimer();
 		if(timer == null)
 			return;

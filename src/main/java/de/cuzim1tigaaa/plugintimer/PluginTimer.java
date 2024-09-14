@@ -24,7 +24,7 @@ public final class PluginTimer extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		if(this.timerAPI.getActiveTimer() != null)
-			this.timerAPI.stopTimer(true);
+			this.timerAPI.stopTimer();
 		this.files.saveTimers();
 	}
 }

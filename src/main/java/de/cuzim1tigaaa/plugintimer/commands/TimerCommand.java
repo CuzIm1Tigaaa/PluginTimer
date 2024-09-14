@@ -54,7 +54,7 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 					return true;
 				}
 				TimerStopEvent tse = new TimerStopEvent(timerAPI.getActiveTimer(), TimerStopEvent.StopReason.COMMAND);
-				timerAPI.stopTimer(false);
+				timerAPI.stopTimer();
 				Bukkit.getPluginManager().callEvent(tse);
 			}
 			case "pause" -> {
@@ -100,7 +100,7 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 					return true;
 				}
 				Timer timer = timerAPI.createTimer(name, args.length > 2 && args[2].equalsIgnoreCase("bossbar"));
-				Message.sendMessage(sender, "&7Der Timer &a%s &7wurde erstellt!", timer.getName());
+				Message.sendMessage(sender, "&7Der Timer &a%s &7wurde erstellt!", timer.getName()   );
 			}
 			case "select" -> {
 				if(noPermission(sender, TIMER_SELECT))
