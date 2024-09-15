@@ -119,6 +119,11 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 					Message.sendMessage(sender, "&cEin Timer mit diesem Namen existiert nicht!");
 					return true;
 				}
+				if(timerAPI.isRunning()) {
+					timerAPI.stopTimer();
+					Message.sendMessage(sender, "&7Der Timer &a%s &7wurde gestoppt, da ein neuer Timer ausgewählt wurde!",
+							timerAPI.getActiveTimer().getName());
+				}
 				timerAPI.setActiveTimer(timerAPI.getTimer(name));
 				Message.sendMessage(sender, "&7Der Timer &a%s &7wurde ausgewählt!", name);
 			}
@@ -143,7 +148,8 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 					return true;
 
 				Message.sendMessage(sender, "&7Verfügbare Timer:");
-				timerAPI.getTimers().forEach(timer -> Message.sendMessage(sender, " - &a%s", timer.getName()));
+				timerAPI.getTimers().forEach(timer ->
+						Message.sendMessage(sender, " - %s%s", timer.isActive() ? "&6" : "&a",timer.getName()));
 			}
 			case "set" -> {
 				if(noPermission(sender, TIMER_RESET))
