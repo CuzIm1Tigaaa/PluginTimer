@@ -99,8 +99,11 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 					Message.sendMessage(sender, "&cEin Timer mit diesem Namen existiert bereits!");
 					return true;
 				}
-				Timer timer = timerAPI.createTimer(name, args.length > 2 && args[2].equalsIgnoreCase("bossbar"));
-				Message.sendMessage(sender, "&7Der Timer &a%s &7wurde erstellt!", timer.getName()   );
+				boolean bossbar = args.length > 2 && (args[2].equalsIgnoreCase("bossbar") || args[3].equalsIgnoreCase("bossbar"));
+				boolean millis = args.length > 3 && (args[2].equalsIgnoreCase("millis") || args[3].equalsIgnoreCase("millis"));
+
+				Timer timer = timerAPI.createTimer(name, bossbar, !millis);
+				Message.sendMessage(sender, "&7Der Timer &a%s &7wurde erstellt!", timer.getName());
 			}
 			case "select" -> {
 				if(noPermission(sender, TIMER_SELECT))
@@ -162,7 +165,7 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 
 				Timer timer = timerAPI.getActiveTimer();
 				if(args.length == 1) {
-					Message.sendMessage(sender, "&7Der Timer ist aktuell auf &a%s &7Sekunden gesetzt!", timer.getSeconds());
+					Message.sendMessage(sender, "&7Der Timer ist aktuell auf &a%s &7Sekunden gesetzt!", timer.getTime());
 					return true;
 				}
 
@@ -171,7 +174,7 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 					value = Integer.parseInt(args[1]);
 				}catch(NumberFormatException ignored) {}
 
-				timer.setSeconds(value);
+				timer.setTime(value);
 				Message.sendMessage(sender, "&7Der Timer wurde auf &a%s &7Sekunden gesetzt!", value);
 			}
 			case "direction" -> {

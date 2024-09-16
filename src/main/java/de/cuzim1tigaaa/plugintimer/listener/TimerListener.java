@@ -32,7 +32,7 @@ public class TimerListener implements Listener {
 
 		BossBar bossBar = timer.getTimerBar();
 		Bukkit.getOnlinePlayers().forEach(bossBar::addPlayer);
-		bossBar.setProgress((double) timer.getSeconds() / timer.getInitialValue());
+		bossBar.setProgress((double) timer.getTime() / timer.getInitialValue());
 	}
 
 	@EventHandler

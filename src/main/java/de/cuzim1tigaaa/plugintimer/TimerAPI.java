@@ -3,6 +3,7 @@ package de.cuzim1tigaaa.plugintimer;
 import de.cuzim1tigaaa.plugintimer.events.*;
 import de.cuzim1tigaaa.plugintimer.files.Message;
 import lombok.Getter;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BossBar;
 
@@ -46,7 +47,7 @@ public class TimerAPI {
 		if(timer.isBossbar() && !timer.isCountUp()) {
 			BossBar bossBar = timer.getTimerBar();
 			Bukkit.getOnlinePlayers().forEach(bossBar::addPlayer);
-			bossBar.setProgress((double) timer.getSeconds() / timer.getInitialValue());
+			bossBar.setProgress((double) timer.getTime() / timer.getInitialValue());
 		}
 
 		Bukkit.getOnlinePlayers().forEach(player -> Message.sendActionBar(player, timer.toString()));
@@ -54,13 +55,13 @@ public class TimerAPI {
 			timer.tick();
 			Bukkit.getOnlinePlayers().forEach(player -> Message.sendActionBar(player, timer.toString()));
 
-			if(!timer.isCountUp() && timer.getSeconds() <= 0) {
+			if(!timer.isCountUp() && timer.getTime() <= 0) {
 				TimerStopEvent tse = new TimerStopEvent(timer, TimerStopEvent.StopReason.FINISHED);
 				stopTimer();
 				Bukkit.getPluginManager().callEvent(tse);
 				return;
 			}
-			TimerTickEvent tte = new TimerTickEvent(timer, timer.getSeconds(), timer.isCountUp());
+			TimerTickEvent tte = new TimerTickEvent(timer, timer.getTime(), timer.isCountUp());
 			Bukkit.getPluginManager().callEvent(tte);
 		}, 20L, 20L).getTaskId();
 
@@ -105,14 +106,14 @@ public class TimerAPI {
 		timer.setActive(true);
 	}
 
-	public Timer createTimer(String name, boolean bossbar) {
-		Timer timer = new Timer(name, bossbar);
+	public Timer createTimer(String name, boolean bossbar, boolean seconds) {
+		Timer timer = new Timer(name, bossbar, seconds);
 		timers.add(timer);
 		return timer;
 	}
 
-	public Timer createTimer(String name, int seconds, boolean countUp, boolean active, boolean bossbar) {
-		Timer timer = new Timer(name, seconds, countUp, active, bossbar);
+	public Timer createTimer(String name, long time, boolean countUp, boolean active, boolean bossbar, boolean seconds) {
+		Timer timer = new Timer(name, time, countUp, active, bossbar, seconds);
 		timers.add(timer);
 		setActiveTimer(timer);
 		return timer;
@@ -129,11 +130,21 @@ public class TimerAPI {
 		Timer timer = getActiveTimer();
 		if(timer == null)
 			return;
-		timer.setSeconds(0);
+		timer.setTime(0);
 	}
 
 	public Timer getTimer(String name) {
 		return getTimers().stream().filter(timer ->
 				timer.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+	}
+
+	public String toString(long time, boolean millis) {
+		Timer timer = new Timer("Timer", time, false, false, false, millis);
+		return timer.toString();
+	}
+
+	public String toString(long time, ChatColor primary, ChatColor secondary, boolean millis) {
+		Timer timer = new Timer("Timer", time, false, false, false, millis);
+		return timer.formatTime(primary, secondary);
 	}
 }
