@@ -68,7 +68,7 @@ public class Timer {
 		int millis = -1;
 		long seconds = getTime();
 
-		if(this.seconds) {
+		if(!this.seconds) {
 			seconds /= 1000;
 			millis = (int) (getTime() % 1000);
 		}
