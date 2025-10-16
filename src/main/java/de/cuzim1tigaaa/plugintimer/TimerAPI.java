@@ -50,10 +50,10 @@ public class TimerAPI {
 			bossBar.setProgress((double) timer.getTime() / timer.getInitialValue());
 		}
 
-		Bukkit.getOnlinePlayers().forEach(player -> Message.sendActionBar(player, timer.toString()));
 		this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
 			timer.tick();
-			Bukkit.getOnlinePlayers().forEach(player -> Message.sendActionBar(player, timer.toString()));
+			if(timer.isActionBar())
+				Bukkit.getOnlinePlayers().forEach(player -> Message.sendActionBar(player, timer.toString()));
 
 			if(!timer.isCountUp() && timer.getTime() <= 0) {
 				TimerStopEvent tse = new TimerStopEvent(timer, TimerStopEvent.StopReason.FINISHED);
@@ -113,7 +113,7 @@ public class TimerAPI {
 	}
 
 	public Timer createTimer(String name, long time, boolean countUp, boolean active, boolean bossbar, boolean seconds) {
-		Timer timer = new Timer(name, time, countUp, active, bossbar, seconds);
+		Timer timer = new Timer(name, time, countUp, active, bossbar, seconds, true);
 		timers.add(timer);
 		setActiveTimer(timer);
 		return timer;
@@ -139,12 +139,12 @@ public class TimerAPI {
 	}
 
 	public String toString(long time, boolean millis) {
-		Timer timer = new Timer("Timer", time, false, false, false, millis);
+		Timer timer = new Timer("Timer", time, false, false, false, millis, true);
 		return timer.toString();
 	}
 
 	public String toString(long time, ChatColor primary, ChatColor secondary, boolean millis) {
-		Timer timer = new Timer("Timer", time, false, false, false, millis);
+		Timer timer = new Timer("Timer", time, false, false, false, millis, true);
 		return timer.formatTime(primary, secondary);
 	}
 }

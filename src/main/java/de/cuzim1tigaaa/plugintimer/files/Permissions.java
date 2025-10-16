@@ -11,4 +11,5 @@ public class Permissions {
 	public static final String TIMER_DELETE = "timer.command.delete";
 	public static final String TIMER_LIST = "timer.command.list";
 	public static final String TIMER_DIRECTION = "timer.command.direction";
+	public static final String TIMER_ACTION_BAR = "timer.command.actionbar";
 }

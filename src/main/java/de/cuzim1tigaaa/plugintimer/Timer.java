@@ -15,21 +15,22 @@ public class Timer {
 	@Getter @Expose
 	private long time, initialValue;
 	@Getter @Setter @Expose
-	private boolean countUp, active, bossbar, seconds;
+	private boolean countUp, active, bossbar, seconds, actionBar;
 
 	private BossBar timerBar;
 
 	public Timer(String name, boolean bossBar, boolean seconds) {
-		this(name, 0, true, false, bossBar, seconds);
+		this(name, 0, true, false, bossBar, seconds, true);
 	}
 
-	public Timer(String name, long time, boolean countUp, boolean active, boolean bossbar, boolean seconds) {
+	public Timer(String name, long time, boolean countUp, boolean active, boolean bossbar, boolean seconds, boolean actionBar) {
 		this.name = name;
 		this.time = this.initialValue = time;
 		this.countUp = countUp;
 		this.active = active;
 		this.bossbar = bossbar;
 		this.seconds = seconds;
+		this.actionBar = actionBar;
 
 		if(bossbar) {
 			this.timerBar = Bukkit.createBossBar("", org.bukkit.boss.BarColor.WHITE, org.bukkit.boss.BarStyle.SOLID);

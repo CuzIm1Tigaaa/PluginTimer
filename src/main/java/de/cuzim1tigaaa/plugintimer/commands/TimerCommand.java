@@ -199,6 +199,28 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
 				Message.sendMessage(sender, "&7Der Timer läuft nun %s", timer.isCountUp() ? "&avorwärts" : "&crückwärts");
 				return true;
 			}
+			case "action", "actionbar" -> {
+				if(noPermission(sender, TIMER_ACTION_BAR))
+					return true;
+
+				if(timerAPI.getActiveTimer() == null) {
+					Message.sendMessage(sender, "&cBitte wähle einen Timer aus!");
+					return true;
+				}
+
+				Timer timer = timerAPI.getActiveTimer();
+				if(args.length == 1) {
+					Message.sendMessage(sender, "&7Der Timer wird aktuell %sin der Action-Bar angezeigt", timer.isActionBar() ? "" : "&cNICHT&7 ");
+					return true;
+				}
+				switch(args[1].toLowerCase()) {
+					case "on" -> timer.setActionBar(true);
+					case "off" -> timer.setActionBar(false);
+					case "toggle" -> timer.setActionBar(!timer.isActionBar());
+				}
+				Message.sendMessage(sender, "&7Der Timer wird nun %sin der Action-Bar angezeigt", timer.isActionBar() ? "" : "&cNICHT&7 ");
+				return true;
+			}
 			default -> Message.sendMessage(sender, "&cUngültiger Unterbefehl!");
 		}
 

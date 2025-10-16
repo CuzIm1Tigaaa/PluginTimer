@@ -3,7 +3,6 @@ package de.cuzim1tigaaa.plugintimer.listener;
 import de.cuzim1tigaaa.plugintimer.PluginTimer;
 import de.cuzim1tigaaa.plugintimer.Timer;
 import de.cuzim1tigaaa.plugintimer.events.*;
-import de.cuzim1tigaaa.plugintimer.files.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BossBar;
 import org.bukkit.event.EventHandler;
@@ -37,7 +36,6 @@ public class TimerListener implements Listener {
 
 	@EventHandler
 	public void timerStart(TimerStartEvent event) {
-		Message.broadcast("&7Der Timer wurde &agestartet");
 		Timer timer = event.getTimer();
 		if(timer.getTimerBar() != null) {
 			timer.getTimerBar().setVisible(true);
